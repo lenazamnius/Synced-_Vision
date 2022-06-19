@@ -1,0 +1,45 @@
+.layout {
+    min-height: 100vh;
+    padding: 100px 0;
+    background: #fff;
+}
+
+.done-title {
+    padding: 30px 0 10px;
+}
+
+.input.ant-form-item {
+    flex-grow: 1;
+}
+
+.submit-btn.ant-form-item {
+    margin-right: 0;
+}
+
+.ant-form-inline .ant-form-item-with-help {
+    margin-bottom: 0;
+}
+
+.item-inner {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.ant-list {
+    max-height: 255px;
+    overflow-y: auto;
+}
+
+.ant-list::-webkit-scrollbar-track {
+    background-color: #F5F5F5;
+}
+
+.ant-list::-webkit-scrollbar {
+    width: 4px;
+    background-color: #F5F5F5;
+}
+
+.ant-list::-webkit-scrollbar-thumb {
+    background-color: #a5a5a580;
+}

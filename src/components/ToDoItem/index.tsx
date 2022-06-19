@@ -1,31 +1,32 @@
 import {Button, Checkbox, List, Space, Typography} from "antd"
 import {DeleteFilled} from '@ant-design/icons';
 import React from "react";
-import {TodoType} from "../../types";
+import {useProvider} from "../../Provider";
+import {TodoType} from "../../Provider/types";
 
-const { Title, Text } = Typography;
+const {Title, Text} = Typography;
 
 interface Props {
   data: TodoType;
-  statusHandler: (id: string) => void;
-  deleteHandler: (id: string) => void;
 }
 
-const ToDoItem: React.FC<Props> = ({data: {date, title, checked, id}, statusHandler, deleteHandler}) => {
+const ToDoItem: React.FC<Props> = ({ data: { date, title, checked, id}}) => {
+  const {deleteTodo, handleStatus} = useProvider();
+
   return (
     <List.Item
       actions={[
         <Button
-          type={"primary"}
           size={"large"}
-          icon={<DeleteFilled />}
-          onClick={() => deleteHandler(id)}
+          type={"primary"}
+          icon={<DeleteFilled/>}
+          onClick={() => deleteTodo(id)}
         />
       ]}
     >
-      <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+      <div className={"item-inner"}>
         <Space direction={"horizontal"} align={"baseline"} size={30}>
-          <Checkbox checked={checked} onChange={() => statusHandler(id)} />
+          <Checkbox checked={checked} onChange={() => handleStatus(id)}/>
           <Title
             level={5}
             delete={checked}

@@ -1,13 +1,12 @@
 import {Button, Form, Input, InputRef} from "antd";
-import React, {useEffect, useRef} from "react";
+import React, {FC, useEffect, useRef} from "react";
+import {useProvider} from "../../Provider";
+import {validationRules} from "../../utils/helpers";
 
-interface Props {
-  handleSetNewTodo: (value: string) => void
-}
-
-const ToDoInput: React.FC<Props> = ({handleSetNewTodo}) => {
-  const [form] = Form.useForm();
+const ToDoInput: FC = () => {
+  const { addTodo  } = useProvider();
   const inputRef = useRef<InputRef>(null);
+  const [form] = Form.useForm();
 
   useEffect(() => {
     inputRef.current && inputRef.current.focus();
@@ -15,37 +14,25 @@ const ToDoInput: React.FC<Props> = ({handleSetNewTodo}) => {
 
   const onFinish = (value: {todo: string}) => {
     form.resetFields();
-    handleSetNewTodo(value.todo);
+    addTodo(value.todo);
   }
 
   return (
     <Form
-      size="large"
-      layout="inline"
       form={form}
+      size={"large"}
+      layout={"inline"}
       onFinish={onFinish}
       initialValues={{todo: ''}}
     >
       <Form.Item
-        name="todo"
-        rules={[
-          {
-            required: true,
-            message: 'Please input new todo!'
-          }, {
-            pattern: new RegExp('^.*[a-zA-Zа-яА-Я]+.*$'),
-            message: "Can not contain only digits",
-          }, {
-            min: 3,
-            message: "Must be at least 3 characters long",
-          }
-        ]}
-        style={{ flexGrow: 1 }}
-      >
-        <Input placeholder="new task" ref={inputRef} allowClear />
+        name={"todo"}
+        className={"input"}
+        rules={[ ...validationRules ]}>
+        <Input placeholder={"new task"} ref={inputRef} allowClear />
       </Form.Item>
-      <Form.Item style={{ marginRight: 0 }}>
-        <Button size="large" type="primary" htmlType="submit">
+      <Form.Item className={"submit-btn"}>
+        <Button size={"large"} type={"primary"} htmlType={"submit"}>
           Submit
         </Button>
       </Form.Item>

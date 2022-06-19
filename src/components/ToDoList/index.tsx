@@ -1,27 +1,21 @@
 import {List} from "antd";
 import React from "react";
+import {useProvider} from "../../Provider";
 import ToDoItem from "../ToDoItem";
-import {TodoType} from "../../types";
 
 interface Props {
-  listData: TodoType[],
-  statusHandler: (id: string) => void;
-  deleteHandler: (id: string) => void;
-  isDone?: boolean,
+  isDone?: boolean;
 }
 
-const ToDoList: React.FC<Props> = ({
-   listData,
-   statusHandler,
-   deleteHandler,
-   isDone = false
-}) => {
+const ToDoList: React.FC<Props> = ({ isDone = false }) => {
+  const { todos  } = useProvider();
+
   return (
     <List
-        bordered
-        itemLayout="horizontal"
-        dataSource={listData}
-        renderItem={item => (isDone === item.checked && <ToDoItem key={item.id} data={item} statusHandler={statusHandler} deleteHandler={deleteHandler} />)}
+      bordered
+      dataSource={todos}
+      renderItem={ item => (isDone === item.checked && <ToDoItem key={item.id} data={item} />)}
+      itemLayout={"horizontal"}
     />
   )
 };
